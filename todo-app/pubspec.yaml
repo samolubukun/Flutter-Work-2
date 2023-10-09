@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.19.0 <4.0.0"
 
 dependencies:
+  shared_preferences: ^2.0.12
   flutter:
     sdk: flutter
 
