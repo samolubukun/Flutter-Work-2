@@ -54,12 +54,19 @@ class _TodoListScreenState extends State<TodoListScreen> {
     _prefs = await SharedPreferences.getInstance();
     List<String> todoStrings = _prefs.getStringList('todos') ?? [];
     setState(() {
-      _todos = todoStrings.map((text) => Todo(text: text)).toList();
+      _todos = todoStrings.map((text) {
+        // Split the stored string into text and completed status
+        final parts = text.split('::');
+        return Todo(text: parts[0], completed: parts[1] == 'true');
+      }).toList();
     });
   }
 
   _saveData() async {
-    List<String> todoStrings = _todos.map((todo) => todo.text).toList();
+    List<String> todoStrings = _todos.map((todo) {
+      // Combine text and completed status into a single string
+      return '${todo.text}::${todo.completed}';
+    }).toList();
     await _prefs.setStringList('todos', todoStrings);
   }
 
